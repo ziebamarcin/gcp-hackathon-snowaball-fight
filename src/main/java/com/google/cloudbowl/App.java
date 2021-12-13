@@ -3,8 +3,6 @@ package com.google.cloudbowl;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -43,7 +41,7 @@ public class App {
 
     @GET
     public String index() {
-        return "Let the battle begin!";
+        return "Let the battle begin! 1.1";
     }
 
     @POST
