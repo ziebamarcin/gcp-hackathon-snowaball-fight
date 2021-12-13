@@ -1,5 +1,7 @@
 package hello;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.WebDataBinder;
@@ -13,6 +15,8 @@ import java.util.Random;
 @RestController
 public class Application {
 
+  private static final Logger LOG = LoggerFactory.getLogger(Application.class);
+  
   static class Self {
     public String href;
   }
@@ -57,63 +61,63 @@ public class Application {
   public String index(@RequestBody ArenaUpdate arenaUpdate) {
     List<Integer> position = getMyPosition(arenaUpdate);
 
-    System.out.println("pos x: " + position.get(0) + " y: " + position.get(1));
+    LOG.info("pos x: " + position.get(0) + " y: " + position.get(1));
 
     // jeśli jestem uderzony - uciekaj
     if(wasIHit(arenaUpdate)){
 
-      System.out.println("Musze uciekac");
+      LOG.info("Musze uciekac");
       if(canGoForward(arenaUpdate)) {
-        System.out.println("Uciekam do przodu!");
+        LOG.info("Uciekam do przodu!");
         return "F";
       }
       if(canGoLeft(arenaUpdate)) {
-        System.out.println("Uciekam na lewo!");
+        LOG.info("Uciekam na lewo!");
         return "L";
       }
       if(canGoRight(arenaUpdate)) {
-        System.out.println("Uciekam na na prawo");
+        LOG.info("Uciekam na na prawo");
         return "R";
       }
       if(canGoBackward(arenaUpdate)) {
-        System.out.println("Moge uciekac do tylu. Obracam sie w prawo!");
+        LOG.info("Moge uciekac do tylu. Obracam sie w prawo!");
         return "R";
       }
-      System.out.println("Nie moge uciec - rzucam!");
+      LOG.info("Nie moge uciec - rzucam!");
       return "T";
     }
 
     // jeśli ktos na celowniku ponizej 3 strzelaj
     if(someoneOnTarget(arenaUpdate)){
-      System.out.println("Rzucam");
+      LOG.info("Rzucam");
       return "T";
     }
     //jeśli ktoś w zasięgu jednego kroku idź
     if(someoneOnOneStepForward(arenaUpdate)){
-      System.out.println("Ide do przodu, bo ktos jest o jedno pole ode mnie!");
+      LOG.info("Ide do przodu, bo ktos jest o jedno pole ode mnie!");
       return "F";
     }
 
     //jesli ktos w zasiegu ale w innym kierunku
     if(someoneOnNorth(arenaUpdate)) {
-      System.out.println("Ktos na polnocy, obracam sie");
+      LOG.info("Ktos na polnocy, obracam sie");
       return getTurn("N", arenaUpdate);
     }
     if(someoneOnSouth(arenaUpdate)) {
-      System.out.println("Ktos na poludniu, obracam sie");
+      LOG.info("Ktos na poludniu, obracam sie");
       return getTurn("S", arenaUpdate);
     }
     if(someoneOnWest(arenaUpdate)) {
-      System.out.println("Ktos na zachodzie, obracam sie");
+      LOG.info("Ktos na zachodzie, obracam sie");
       return getTurn("W", arenaUpdate);
     }
     if(someoneOnEast(arenaUpdate)) {
-      System.out.println("Ktos na wschodzie, obracam sie");
+      LOG.info("Ktos na wschodzie, obracam sie");
       return getTurn("E", arenaUpdate);
     }
 
     if(canGoForward(arenaUpdate)) {
-      System.out.println("Brak pomyslu, ide do przodu");
+      LOG.info("Brak pomyslu, ide do przodu");
       return "F";
     }
 
@@ -195,7 +199,7 @@ public class Application {
   private String leftOrRight() {
     String[] commands = new String[]{"R", "L"};
     String command = commands[new Random().nextInt(2)];
-    System.out.println("Losowy kierunek: " + command);
+    LOG.info("Losowy kierunek: " + command);
     return command;
   }
 
