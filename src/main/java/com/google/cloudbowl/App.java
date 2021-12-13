@@ -78,19 +78,19 @@ public class App {
         //jesli ktos w zasiegu ale w innym kierunku
         if(someoneOnNorth(arenaUpdate)) { 
             System.out.println("Ktos na polnocy, obracam sie");
-            return "N";
+            return getTurn("N", arenaUpdate);
         }
         if(someoneOnSouth(arenaUpdate)) { 
             System.out.println("Ktos na poludniu, obracam sie");
-            return "S";
+            return getTurn("S", arenaUpdate);
         }
         if(someoneOnWest(arenaUpdate)) { 
             System.out.println("Ktos na zachodzie, obracam sie");
-            return "W";
+            return getTurn("W", arenaUpdate);
         }
         if(someoneOnEast(arenaUpdate)) { 
             System.out.println("Ktos na wschodzie, obracam sie");
-            return "E";
+            return getTurn("E", arenaUpdate);
         }
 
         if(canGoForward(arenaUpdate)) {
@@ -99,6 +99,44 @@ public class App {
         }
 
         return leftOrRight();
+    }
+
+    private String getTurn(String direction, ArenaUpdate arenaUpdate) {
+        String currentDir = getMyState(arenaUpdate).direction;
+    
+        if(currentDir.equals("N") && direction.equals("W"))
+            return "L";
+        if(currentDir.equals("N") && direction.equals("E"))
+            return "R";
+        if(currentDir.equals("N") && direction.equals("S"))
+            return "L";
+
+
+        if(currentDir.equals("W") && direction.equals("N"))
+            return "R";
+        if(currentDir.equals("W") && direction.equals("E"))
+            return "L";
+        if(currentDir.equals("W") && direction.equals("S"))
+            return "L";
+
+
+
+        if(currentDir.equals("S") && direction.equals("N"))
+            return "L";
+        if(currentDir.equals("S") && direction.equals("E"))
+            return "L";
+        if(currentDir.equals("S") && direction.equals("W"))
+            return "R";
+
+
+    
+
+        if(currentDir.equals("E") && direction.equals("N"))
+            return "L";
+        if(currentDir.equals("E") && direction.equals("W"))
+            return "L";
+        if(currentDir.equals("E") && direction.equals("S"))
+            return "R";
     }
 
     private boolean someoneOnEast(ArenaUpdate arenaUpdate) {
