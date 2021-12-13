@@ -1,11 +1,11 @@
-CloudBowl - Sample - Java Quarkus
----------------------------------
+Cloud Bowl Sample - Java Spring Boot
+------------------------------------
 
-To make changes, edit the `src/main/java/com/google/cloudbowl/App.java` file.
+To make changes, edit the `src/main/java/hello/Application.java` file.
 
 Run Locally:
 ```
-./mvnw quarkus:dev
+./mvnw spring-boot:run
 ```
 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
@@ -13,7 +13,6 @@ Run Locally:
 Containerize & Run Locally:
 ```
 export PROJECT_ID=YOUR_GCP_PROJECT_ID
-pack build --builder=gcr.io/buildpacks/builder gcr.io/$PROJECT_ID/cloudbowl-samples-java-quarkus
-docker run -it -ePORT=8080 -p8080:8080 gcr.io/$PROJECT_ID/cloudbowl-samples-java-quarkus
+pack build --builder=gcr.io/buildpacks/builder gcr.io/$PROJECT_ID/cloudbowl-samples-java-springboot
+docker run -it -ePORT=8080 -p8080:8080 gcr.io/$PROJECT_ID/cloudbowl-samples-java-springboot
 ```
-
