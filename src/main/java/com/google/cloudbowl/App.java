@@ -76,12 +76,12 @@ public class App {
         }
         //jeśli ktoś w zasięgu jednego kroku idź
         if(someoneOnOneStepForward(arenaUpdate)){
-            System.out.println("Idę do przodu, bo ktoś tam jest!");
+            System.out.println("Ide do przodu, bo ktos jest o jedno pole ode mnie!");
             return "F";
         }
 
         String command = commands[i];
-        System.out.println("Komenda " + command);
+        System.out.println("Losowa komenda " + command);
         return command;
     }
 
@@ -124,16 +124,12 @@ public class App {
 
         switch(myPlayerState.direction) { 
             case "N":
-                System.out.println("Jest ktoś na północy");
                 return isPlayerOn(arenaUpdate, myPlayerState.x, myPlayerState.y-4);
             case "S":
-                System.out.println("Jest ktoś na południu");
                 return isPlayerOn(arenaUpdate, myPlayerState.x, myPlayerState.y+4);
             case "W":
-                System.out.println("Jest ktoś na zachodzie");
                 return isPlayerOn(arenaUpdate, myPlayerState.x-4, myPlayerState.y);
             case "E":
-                System.out.println("Jest ktoś na wschodzie");
                 return isPlayerOn(arenaUpdate, myPlayerState.x+4, myPlayerState.y);
         }
 
@@ -150,11 +146,10 @@ public class App {
     }
 
     private boolean isPlayerOn(ArenaUpdate arenaUpdate, int x, int y) { 
-        Optional<PlayerState> ps = arenaUpdate.arena.state.values().stream()
+        return arenaUpdate.arena.state.values().stream()
             .filter(p -> p.x == x && p.y == y)
-            .findFirst();
-            ps.ifPresent(p -> System.out.println("Na polu x: " + p.x + " y: " + p.y + " jest: " + p.score));
-        return ps.isPresent();
+            .findFirst()
+            .isPresent();
     }
 
     private boolean wasIHit(ArenaUpdate arenaUpdate) { 
