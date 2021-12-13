@@ -137,6 +137,8 @@ public class App {
             return "L";
         if(currentDir.equals("E") && direction.equals("S"))
             return "R";
+
+        return "L";
     }
 
     private boolean someoneOnEast(ArenaUpdate arenaUpdate) {
