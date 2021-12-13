@@ -59,9 +59,20 @@ public class App {
                 System.out.println("Uciekam do przodu!");
                 return "F";
             }
-
-            System.out.println("Uciekam w prawo!");
-            return "R";
+            if(canGoLeft(arenaUpdate)) {
+                System.out.println("Uciekam na lewo!");
+                return "L";
+            }
+            if(canGoRight(arenaUpdate)) {
+                System.out.println("Uciekam na na prawo");
+                return "R";
+            }
+            if(canGoBackward(arenaUpdate)) {
+                System.out.println("Moge uciekac do tylu. Obracam sie w prawo!");
+                return "R";
+            }
+            System.out.println("Nie moge uciec - rzucam!");
+            return "T";
         }
 
         // jeśli ktos na celowniku ponizej 3 strzelaj
@@ -210,11 +221,64 @@ public class App {
             case "W":
                 return !(isPlayerOn(arenaUpdate, myPlayerState.x-1, myPlayerState.y) || myPlayerState.x-1 < 0);
             case "E":
-                return !(isPlayerOn(arenaUpdate, myPlayerState.x+1, myPlayerState.y) || myPlayerState.x-1 > arenaUpdate.arena.dims.get(0));
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x+1, myPlayerState.y) || myPlayerState.x+1 > arenaUpdate.arena.dims.get(0));
         }
 
         return true;
     }
+
+    private boolean canGoLeft(ArenaUpdate arenaUpdate) { 
+        PlayerState myPlayerState = getMyState(arenaUpdate);
+
+        switch(myPlayerState.direction) { 
+            case "N":
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x-1, myPlayerState.y) || myPlayerState.x-1 < 0);
+            case "S":
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x+1, myPlayerState.y) || myPlayerState.x+1 > arenaUpdate.arena.dims.get(0));
+            case "W":
+                
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x, myPlayerState.y+1) || myPlayerState.y+1 > arenaUpdate.arena.dims.get(1));
+            case "E":
+              return !(isPlayerOn(arenaUpdate, myPlayerState.x, myPlayerState.y-1) || myPlayerState.y-1 < 0);
+        }
+
+        return true;
+    }
+
+    private boolean canGoRight(ArenaUpdate arenaUpdate) { 
+        PlayerState myPlayerState = getMyState(arenaUpdate);
+
+        switch(myPlayerState.direction) { 
+            case "N":
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x+1, myPlayerState.y) || myPlayerState.x+1 > arenaUpdate.arena.dims.get(0));
+            case "S":
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x-1, myPlayerState.y) || myPlayerState.x-1 < 0);
+            case "W":
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x, myPlayerState.y-1) || myPlayerState.y-1 < 0);
+            case "E":
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x, myPlayerState.y+1) || myPlayerState.y+1 > arenaUpdate.arena.dims.get(1));
+        }
+
+        return true;
+    }
+
+    private boolean canGoBackward(ArenaUpdate arenaUpdate) { 
+        PlayerState myPlayerState = getMyState(arenaUpdate);
+
+        switch(myPlayerState.direction) { 
+            case "N":
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x, myPlayerState.y+1) || myPlayerState.y+1 > arenaUpdate.arena.dims.get(1));   
+            case "S":
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x, myPlayerState.y-1) || myPlayerState.y-1 < 0);
+            case "W":
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x+1, myPlayerState.y) || myPlayerState.x+1 > arenaUpdate.arena.dims.get(0));
+            case "E":
+                return !(isPlayerOn(arenaUpdate, myPlayerState.x-1, myPlayerState.y) || myPlayerState.x-1 < 0);
+        }
+
+        return true;
+    }
+    
     private boolean someoneOnOneStepForward(ArenaUpdate arenaUpdate) { 
         PlayerState myPlayerState = getMyState(arenaUpdate);
 
